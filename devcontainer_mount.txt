@@ -1,0 +1,10 @@
+"mounts": [
+    "source=/home/tobias/Dokumente/GitHub/ha-remoteNow/custom_components/RemoteNow,target=/workspaces/home-assistant-core/config/custom_components/RemoteNow,type=bind,consistency=cached"
+  ],
+
+
+// start of script/setup
+git config --global --add safe.directory /workspaces/home-assistant-core
+chmod -R 777 /workspaces/home-assistant-core
+
+/home/tobias/Dokumente/GitHub/ha-remoteNow

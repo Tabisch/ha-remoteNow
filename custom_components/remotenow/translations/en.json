@@ -1,0 +1,18 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "data": {
+                    "host": "IP or DNS-Name"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Connection could not be estabilshed",
+            "unknown": "Unknown error"
+        },
+        "abort": {
+            "already_configured": "Device already configured"
+        }
+    }
+}
