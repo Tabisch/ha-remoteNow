@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+import asyncio
+
 import logging
 from typing import Any
+
+from RemoteNowApiWrapper import RemoteNowApi
 
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
-from homeassistant.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
+from homeassistant.const import CONF_HOST
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 
@@ -16,11 +20,7 @@ from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-STEP_USER_DATA_SCHEMA = vol.Schema(
-    {
-        vol.Required(CONF_HOST): str,
-    }
-)
+STEP_USER_DATA_SCHEMA = vol.Schema({vol.Required(CONF_HOST): str})
 
 
 class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
@@ -35,11 +35,21 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
         if user_input is not None:
             try:
-                info = "asd"
+                api = RemoteNowApi(hostname=user_input[CONF_HOST])
+                api.connect()
+
+                while True:
+                    if api.get_Connected():
+                        break
+                    else:
+                        await asyncio.sleep(5)
+
             except Exception:
                 _LOGGER.exception("Unexpected exception")
             else:
-                return self.async_create_entry(title=info, data=user_input)
+                return self.async_create_entry(
+                    title=user_input[CONF_HOST], data=user_input
+                )
 
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
