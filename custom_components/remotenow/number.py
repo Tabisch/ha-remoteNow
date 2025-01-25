@@ -15,22 +15,22 @@ from .const import DOMAIN
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    async_add_entities([RemoteNowVolumeNumber(entry.runtime_data)])
+    async_add_entities([RemoteNowVolumeNumber(entry.runtime_data, entry.data)])
 
 
 class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
     # Implement one of these methods.
 
-    def __init__(self, api: RemoteNowApi) -> None:
+    def __init__(self, api: RemoteNowApi, entryData: dict) -> None:
         self._api = api
 
-        self._vendor = self._api.getVendor()
-        self._uniqueDeviceId = self._api.getUniqueDeviceId()
-        self._boardVersion = self._api.getBoardVersion()
+        self._vendor = entryData["vendor"]
+        self._uniqueDeviceId = entryData["uniqueDeviceId"]
+        self._boardVersion = entryData["boardVersion"]
         self._sw_version = self._api.getSoftwareVersion()
         self._attributename = "volume"
 
-        self._name = f"{DOMAIN}_{self._uniqueDeviceId}_{self._attributename}"
+        self._name = "Volume"
         self._state = 0
 
         self._api.register_handle_on_volumeChange(self.updateValue)

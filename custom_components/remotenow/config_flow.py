@@ -47,8 +47,15 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
             except Exception:
                 _LOGGER.exception("Unexpected exception")
             else:
+                entryData = {
+                    "host": user_input[CONF_HOST],
+                    "uniqueDeviceId": api.getUniqueDeviceId(),
+                    "boardVersion": api.getBoardVersion(),
+                    "vendor": api.getVendor(),
+                }
+
                 return self.async_create_entry(
-                    title=user_input[CONF_HOST], data=user_input
+                    title=user_input[CONF_HOST], data=entryData
                 )
 
         return self.async_show_form(

@@ -12,35 +12,51 @@ async def async_setup_entry(
 ) -> None:
     async_add_entities(
         [
-            RemoteNowButton(entry.runtime_data, key=keys.keyVolumeUp),
-            RemoteNowButton(entry.runtime_data, key=keys.keyVolumeDown),
-            RemoteNowButton(entry.runtime_data, key=keys.keyMute),
-            RemoteNowButton(entry.runtime_data, key=keys.keyPower),
-            RemoteNowButton(entry.runtime_data, key=keys.keyUp),
-            RemoteNowButton(entry.runtime_data, key=keys.keyDown),
-            RemoteNowButton(entry.runtime_data, key=keys.keyLeft),
-            RemoteNowButton(entry.runtime_data, key=keys.keyRight),
-            RemoteNowButton(entry.runtime_data, key=keys.keyReturn),
-            RemoteNowButton(entry.runtime_data, key=keys.keyMenu),
-            RemoteNowButton(entry.runtime_data, key=keys.keyExit),
-            RemoteNowButton(entry.runtime_data, key=keys.keyOk),
-            RemoteNowButton(entry.runtime_data, key=keys.keyHome),
-            RemoteNowButton(entry.runtime_data, key=keys.keyForward),
-            RemoteNowButton(entry.runtime_data, key=keys.keyBack),
-            RemoteNowButton(entry.runtime_data, key=keys.keyStop),
-            RemoteNowButton(entry.runtime_data, key=keys.keyPlay),
-            RemoteNowButton(entry.runtime_data, key=keys.keyPause),
-            RemoteNowButton(entry.runtime_data, key=keys.key0),
-            RemoteNowButton(entry.runtime_data, key=keys.key1),
-            RemoteNowButton(entry.runtime_data, key=keys.key2),
-            RemoteNowButton(entry.runtime_data, key=keys.key3),
-            RemoteNowButton(entry.runtime_data, key=keys.key4),
-            RemoteNowButton(entry.runtime_data, key=keys.key5),
-            RemoteNowButton(entry.runtime_data, key=keys.key6),
-            RemoteNowButton(entry.runtime_data, key=keys.key7),
-            RemoteNowButton(entry.runtime_data, key=keys.key8),
-            RemoteNowButton(entry.runtime_data, key=keys.key9),
-            RemoteNowButton(entry.runtime_data, key=keys.keySubtitle),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keyVolumeUp, entryData=entry.data
+            ),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keyVolumeDown, entryData=entry.data
+            ),
+            RemoteNowButton(entry.runtime_data, key=keys.keyMute, entryData=entry.data),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keyPower, entryData=entry.data
+            ),
+            RemoteNowButton(entry.runtime_data, key=keys.keyUp, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.keyDown, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.keyLeft, entryData=entry.data),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keyRight, entryData=entry.data
+            ),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keyReturn, entryData=entry.data
+            ),
+            RemoteNowButton(entry.runtime_data, key=keys.keyMenu, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.keyExit, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.keyOk, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.keyHome, entryData=entry.data),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keyForward, entryData=entry.data
+            ),
+            RemoteNowButton(entry.runtime_data, key=keys.keyBack, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.keyStop, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.keyPlay, entryData=entry.data),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keyPause, entryData=entry.data
+            ),
+            RemoteNowButton(entry.runtime_data, key=keys.key0, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key1, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key2, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key3, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key4, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key5, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key6, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key7, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key8, entryData=entry.data),
+            RemoteNowButton(entry.runtime_data, key=keys.key9, entryData=entry.data),
+            RemoteNowButton(
+                entry.runtime_data, key=keys.keySubtitle, entryData=entry.data
+            ),
         ]
     )
 
@@ -48,12 +64,12 @@ async def async_setup_entry(
 class RemoteNowButton(ButtonEntity):
     # Implement one of these methods.
 
-    def __init__(self, api: RemoteNowApi, key: str) -> None:
+    def __init__(self, api: RemoteNowApi, key: str, entryData: dict) -> None:
         self._api = api
 
-        self._vendor = self._api.getVendor()
-        self._uniqueDeviceId = self._api.getUniqueDeviceId()
-        self._boardVersion = self._api.getBoardVersion()
+        self._vendor = entryData["vendor"]
+        self._uniqueDeviceId = entryData["uniqueDeviceId"]
+        self._boardVersion = entryData["boardVersion"]
         self._sw_version = self._api.getSoftwareVersion()
         self._attributename = key
 
