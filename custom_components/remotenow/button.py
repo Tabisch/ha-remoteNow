@@ -80,8 +80,6 @@ class RemoteNowButton(ButtonEntity):
         self._name = self._attributename.split("_")[1]
         self._available = api.get_Connected()
 
-        _LOGGER.error(self._available)
-
         self._api.register_handle_on_connected(self._isAvailable)
         self._api.register_handle_on_disconnected(self._isUnavailable)
 
