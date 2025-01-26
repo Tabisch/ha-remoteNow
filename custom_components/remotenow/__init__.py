@@ -15,7 +15,7 @@ import asyncio
 
 # TODO List the platforms that you want to support.
 # For your initial PR, limit it to 1 platform.
-_PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.BUTTON]
+_PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.BUTTON, Platform.SELECT]
 
 
 # TODO Update entry annotation
