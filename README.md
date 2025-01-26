@@ -1,15 +1,14 @@
 # ha-remoteNow
 HA integration for devices controlable via the RemoteNow app
 
-This implementation is still in early development. \
-Further development might break this integration. \
-Might break components that rely on paho-mqtt.
+Might break components that rely on paho-mqtt, because this integration uses paho-mqtt 2.1.0, which isnt supported yet by home-assistant.
+
+Channel list is currently hardcoded to ASTRA1 19.2°E. \
+Channel list has to be implemented first
 
 # Working
 Volume \
-Buttons (Atleast the ones i know about atm)
-
-# Open
+Buttons (Atleast the ones i know about atm) \
 Source select \
 Channel select
 
