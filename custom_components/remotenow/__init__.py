@@ -1,6 +1,7 @@
 """The RemoteNow integration."""
 
 from __future__ import annotations
+import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform, CONF_HOST

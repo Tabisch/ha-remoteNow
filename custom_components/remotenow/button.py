@@ -1,3 +1,5 @@
+import logging
+
 from homeassistant.components.button import ButtonEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
@@ -5,6 +7,8 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from RemoteNowApiWrapper import RemoteNowApi, keys
 
 from .const import DOMAIN
+
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
@@ -74,6 +78,12 @@ class RemoteNowButton(ButtonEntity):
         self._attributename = key
 
         self._name = self._attributename.split("_")[1]
+        self._available = api.get_Connected()
+
+        _LOGGER.error(self._available)
+
+        self._api.register_handle_on_connected(self._isAvailable)
+        self._api.register_handle_on_disconnected(self._isUnavailable)
 
     @property
     def name(self) -> str:
@@ -82,6 +92,10 @@ class RemoteNowButton(ButtonEntity):
     @property
     def unique_id(self) -> str:
         return f"{self._uniqueDeviceId}_{self._attributename}"
+
+    @property
+    def available(self) -> str:
+        return self._available
 
     @property
     def device_info(self):
@@ -98,3 +112,11 @@ class RemoteNowButton(ButtonEntity):
     def press(self) -> None:
         """Handle the button press."""
         self._api.sendKey(self._attributename)
+
+    def _isAvailable(self) -> None:
+        self._available = True
+        self.schedule_update_ha_state()
+
+    def _isUnavailable(self) -> None:
+        self._available = False
+        self.schedule_update_ha_state()

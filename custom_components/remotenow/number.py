@@ -31,7 +31,11 @@ class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
         self._attributename = "volume"
 
         self._name = "Volume"
+        self._available = api.get_Connected()
         self._state = 0
+
+        self._api.register_handle_on_connected(self._isAvailable)
+        self._api.register_handle_on_disconnected(self._isUnavailable)
 
         self._api.register_handle_on_volumeChange(self.updateValue)
 
@@ -46,6 +50,10 @@ class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
     @property
     def unique_id(self) -> str:
         return f"{self._uniqueDeviceId}_{self._attributename}"
+
+    @property
+    def available(self) -> str:
+        return self._available
 
     @property
     def device_info(self):
@@ -65,5 +73,16 @@ class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
 
     def updateValue(self, payload) -> None:
         """Update"""
+
+        print(payload)
+
         self._state = payload["volume_value"]
+        self.schedule_update_ha_state()
+
+    def _isAvailable(self) -> None:
+        self._available = True
+        self.schedule_update_ha_state()
+
+    def _isUnavailable(self) -> None:
+        self._available = False
         self.schedule_update_ha_state()
