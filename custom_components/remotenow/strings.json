@@ -5,6 +5,16 @@
         "data": {
           "host": "[%key:common::config_flow::data::host%]"
         }
+      },
+      "auth": {
+        "data": {
+          "host": "[%key:common::config_flow::data::choose%]"
+        }
+      },
+      "sendAuth": {
+        "data": {
+          "host": "[%key:common::config_flow::data::code%]"
+        }
       }
     },
     "error": {

@@ -2,7 +2,9 @@
 HA integration for devices controlable via the RemoteNow app
 
 Might break components that rely on paho-mqtt, because this integration uses paho-mqtt 2.1.0, which isnt supported yet by home-assistant. \
-Config_flow does not provide a way to send the auth code, so setup is broken at the moment.
+
+Config flow still needs some work. \
+Please restart instance after setting up TV.
 
 # Working
 Volume \

@@ -5,6 +5,16 @@
                 "data": {
                     "host": "IP or DNS-Name"
                 }
+            },
+            "auth": {
+                "data": {
+                    "choose": "Auth request showing?"
+                }
+            },
+            "sendAuth": {
+                "data": {
+                    "code": "Enter Auth Code"
+                }
             }
         },
         "error": {

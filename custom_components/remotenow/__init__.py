@@ -22,7 +22,7 @@ _PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.BUTTON, Platform.SELECT]
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up RemoteNow from a config entry."""
 
-    api = RemoteNowApi(hostname=entry.data[CONF_HOST], identifer="devtest")
+    api = RemoteNowApi(hostname=entry.data[CONF_HOST], identifer="homeassistant")
     api.connect()
 
     await asyncio.sleep(5)
