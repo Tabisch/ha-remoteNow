@@ -146,12 +146,8 @@ class RemoteNowChannelSelect(SelectEntity, RemoteNowApi):
         self._api.register_handle_on_channelList(self._updateChannelList)
         self._api.register_handle_on_state(self._updateCurrentOption)
 
-        # Remove ASTRA hardcoding
         if self._available:
-            self._api.getChannelList(
-                list_para="sl1039d34d-3a91-47f4-9805-a44bed1d832b",
-                list_name="ASTRA1 19.2°E",
-            )
+            self._api.getChannelList()
 
     @property
     def name(self) -> str:
@@ -213,10 +209,7 @@ class RemoteNowChannelSelect(SelectEntity, RemoteNowApi):
 
     def _isAvailable(self) -> None:
         self._available = True
-        self._api.getChannelList(
-            list_para="sl1039d34d-3a91-47f4-9805-a44bed1d832b",
-            list_name="ASTRA1 19.2°E",
-        )
+        self._api.getChannelList()
         self.schedule_update_ha_state()
 
     def _isUnavailable(self) -> None:
