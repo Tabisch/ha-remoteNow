@@ -9,7 +9,7 @@ from homeassistant.core import HomeAssistant
 
 from RemoteNowApiWrapper import RemoteNowApi
 
-from .const import DOMAIN
+from .const import DOMAIN, Identifer
 
 import asyncio
 
@@ -22,7 +22,7 @@ _PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.BUTTON, Platform.SELECT]
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up RemoteNow from a config entry."""
 
-    api = RemoteNowApi(hostname=entry.data[CONF_HOST], identifer="homeassistant")
+    api = RemoteNowApi(hostname=entry.data[CONF_HOST], identifer=Identifer)
     api.connect()
 
     await asyncio.sleep(5)

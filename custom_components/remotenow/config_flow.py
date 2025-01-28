@@ -16,7 +16,7 @@ from homeassistant.const import CONF_HOST, CONF_CHOOSE, CONF_CODE
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 
-from .const import DOMAIN
+from .const import DOMAIN, Identifer
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -41,12 +41,22 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 self.api = RemoteNowApi(
-                    hostname=user_input[CONF_HOST], identifer="homeassistant"
+                    hostname=user_input[CONF_HOST], identifer=Identifer
                 )
                 self.api.connect()
 
+                counter = 0
+
                 # while not self.api.get_Connected():
-                #     await asyncio.sleep(5)
+                #    await asyncio.sleep(1)
+
+                #    if counter == 15:
+                #        break
+
+                #    counter = counter + 1
+
+                # if counter == 15:
+                #    raise Exception("Timeout")
 
             except Exception:
                 _LOGGER.exception("Unexpected exception")
@@ -68,10 +78,6 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         """Handle the initial step."""
-        self.api.getAuthCode()
-
-        print("getAuthCode")
-
         errors: dict[str, str] = {}
         if user_input is not None:
             if user_input["choose"]:
@@ -80,6 +86,8 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
                 return self.async_create_entry(
                     title=self.entryData[CONF_HOST], data=self.entryData
                 )
+
+        self.api.getAuthCode()
 
         return self.async_show_form(
             step_id="auth", data_schema=STEP_AUTH_DATA_SCHEMA, errors=errors
@@ -98,6 +106,7 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
             except Exception:
                 _LOGGER.exception("Unexpected exception")
             else:
+                self.api.disconnect()
                 return self.async_create_entry(
                     title=self.entryData[CONF_HOST], data=self.entryData
                 )

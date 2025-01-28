@@ -1,10 +1,11 @@
 # ha-remoteNow
 HA integration for devices controlable via the RemoteNow app
 
-Might break components that rely on paho-mqtt, because this integration uses paho-mqtt 2.1.0, which isnt supported yet by home-assistant. \
+Might break components that rely on paho-mqtt, because this integration uses paho-mqtt 2.1.0, which isnt supported yet by home-assistant.
 
 Config flow still needs some work. \
-Please restart instance after setting up TV.
+It's abit rough but worked in my testing. \
+Just ensure the TV is on before starting the setup.
 
 # Working
 Volume \
