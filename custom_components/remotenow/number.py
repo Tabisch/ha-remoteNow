@@ -1,7 +1,7 @@
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from RemoteNowApiWrapper import RemoteNowApi
+from RemoteNowApiWrapper import RemoteNowApi, keys
 
 from homeassistant.components.number import (
     NumberEntity,
@@ -39,6 +39,10 @@ class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
 
         self._api.register_handle_on_volumeChange(self.updateValue)
 
+        if self._available:
+            self._api.sendKey(key=keys.keyVolumeUp)
+            self._api.sendKey(key=keys.keyVolumeDown)
+
     @property
     def name(self) -> str:
         return self._name
@@ -73,14 +77,13 @@ class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
 
     def updateValue(self, payload) -> None:
         """Update"""
-
-        print(payload)
-
         self._state = payload["volume_value"]
         self.schedule_update_ha_state()
 
     def _isAvailable(self) -> None:
         self._available = True
+        self._api.sendKey(key=keys.keyVolumeUp)
+        self._api.sendKey(key=keys.keyVolumeDown)
         self.schedule_update_ha_state()
 
     def _isUnavailable(self) -> None:
