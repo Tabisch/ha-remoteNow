@@ -40,8 +40,7 @@ class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
         self._api.register_handle_on_volumeChange(self.updateValue)
 
         if self._available:
-            self._api.sendKey(key=keys.keyVolumeUp)
-            self._api.sendKey(key=keys.keyVolumeDown)
+            self._volumeZigZag()
 
     @property
     def name(self) -> str:
@@ -82,10 +81,14 @@ class RemoteNowVolumeNumber(NumberEntity, RemoteNowApi):
 
     def _isAvailable(self) -> None:
         self._available = True
-        self._api.sendKey(key=keys.keyVolumeUp)
-        self._api.sendKey(key=keys.keyVolumeDown)
+        self._volumeZigZag()
         self.schedule_update_ha_state()
 
     def _isUnavailable(self) -> None:
         self._available = False
         self.schedule_update_ha_state()
+
+    # TODO find the correct way to get volume level on connect
+    def _volumeZigZag(self):
+        self._api.sendKey(key=keys.keyVolumeUp)
+        self._api.sendKey(key=keys.keyVolumeDown)
