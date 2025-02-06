@@ -1,11 +1,5 @@
 # ha-remoteNow
-HA integration for devices controlable via the RemoteNow app
-
-Might break components that rely on paho-mqtt, because this integration uses paho-mqtt 2.1.0, which isnt supported yet by home-assistant.
-
-Config flow still needs some work. \
-It's abit rough but worked in my testing. \
-Just ensure the TV is on before starting the setup.
+HA integration for devices controlable via the RemoteNow app. \
 
 # Working
 Volume \
@@ -15,3 +9,7 @@ Channel select
 
 # Underlying Api
 https://github.com/Tabisch/remoteNowApi
+
+Also checkout: https://github.com/sehaas/ha_hisense_tv \
+I made this because i couldn't get the mqtt bridge working. \
+That method may be more feature complete. I couldnt test it.
