@@ -2,5 +2,5 @@
 
 DOMAIN = "remotenow"
 SetupTimeout = 15
- Identifer = "homeassistant"
-#Identifer = "homeassistant-aaaaaa"
+Identifer = "homeassistant"
+#Identifer = "homeassistant-testing1"

@@ -43,24 +43,9 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
                 self.api = RemoteNowApi(
                     hostname=user_input[CONF_HOST], identifer=Identifer
                 )
+
                 self.api.connect()
 
-                counter = 0
-
-                # while not self.api.get_Connected():
-                #    await asyncio.sleep(1)
-
-                #    if counter == 15:
-                #        break
-
-                #    counter = counter + 1
-
-                # if counter == 15:
-                #    raise Exception("Timeout")
-
-            except Exception:
-                _LOGGER.exception("Unexpected exception")
-            else:
                 self.entryData = {
                     "host": user_input[CONF_HOST],
                     "uniqueDeviceId": self.api.getUniqueDeviceId(),
@@ -69,6 +54,9 @@ class RemoteNowFlow(ConfigFlow, domain=DOMAIN):
                 }
 
                 return await self.async_step_auth()
+
+            except Exception:
+                _LOGGER.exception("Unexpected exception")
 
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
