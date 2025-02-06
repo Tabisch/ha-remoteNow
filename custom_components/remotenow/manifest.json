@@ -10,7 +10,8 @@
   "homekit": {},
   "iot_class": "local_push",
   "requirements": [
-    "RemoteNowApiWrapper==0.0.12"
+    "RemoteNowApiWrapper==0.0.12",
+    "paho-mqtt==2.1.0"
   ],
   "ssdp": [],
   "zeroconf": [],
