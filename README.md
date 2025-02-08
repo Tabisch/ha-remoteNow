@@ -1,5 +1,6 @@
 # Warning
-This integration does not work until home assistant raises the paho-mqtt verions.
+This integration does not work until home assistant raises the paho-mqtt version. \
+I know raising it is currently in progress.
 
 # ha-remoteNow
 HA integration for devices controlable via the RemoteNow app.
